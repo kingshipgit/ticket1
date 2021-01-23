@@ -1,0 +1,3 @@
+django
+autopep8
+django_taggit

@@ -1,0 +1,30 @@
+{% extends "ticket/base.html" %}
+{% block title %}My Tickets{% endblock %}
+{% block content %}
+
+{% if tag %}
+{% for tag in object_list.tags.all %}
+<a href="{% url 'blog:post_list_by_tag' tag.slug %}">
+{{ tag.name }}
+</a>
+{% if not forloop.last %}, {% endif %}
+{% endfor %}
+{% endif %}
+
+{% for ticket in object_list %}
+
+<h1>My Blog</h1>
+
+<a href="{{ ticket.get_absolute_url }}">
+    {{ ticket.title }}
+</a>
+<small>
+<p class="text-muted small mt-2">
+    Published {{ ticket.publish }} by {{ ticket.author }}
+</p>
+</small>
+{{ ticket.body|truncatewords:30|linebreaks }}
+
+{% endfor %}
+{% include "ticket/pagination.html" %}
+{% endblock %}
