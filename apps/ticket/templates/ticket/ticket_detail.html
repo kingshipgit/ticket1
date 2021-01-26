@@ -1,15 +1,16 @@
 {% extends "ticket/base.html" %}
+{% load crispy_forms_tags %}
 {% block title %}{{ object.title }}{% endblock %}
 {% block content %}
 <p class="small text-muted">
     Published {{ object.publish }} by {{ object.author }}
 </p>
-<h1>{{ object.title }}</h1>
+<h1 class="small">{{ object.title }}</h1>
 
 {{ object.body|linebreaks }}
 
 {% with comments.count as total_comments %}
-<h2>
+<h2 class="small">
     {{ total_comments }} comment{{ total_comments|pluralize }}
 </h2>
 {% endwith %}
@@ -27,11 +28,11 @@
 {% if new_comment %}
 <h2>Your comment has been added.</h2>
 {% else %}
-<h2>Add a new comment</h2>
+<h2 class="small">Add a new comment</h2>
 <form method="post">
-    {{ form.as_p }}
+    {{ form|crispy }}
     {% csrf_token %}
-    <p><input type="submit"
+    <p><input type="submit" class="btn btn-sm btn-outline-primary my-4 "
             value="Add comment"></p>
 </form>
 {% endif %}

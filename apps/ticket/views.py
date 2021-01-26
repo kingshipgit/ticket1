@@ -2,8 +2,6 @@ from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.urls import reverse
 
-from taggit.models import Tag
-
 from .models import Ticket, Comment
 from .forms import CommentForm
 
@@ -14,17 +12,11 @@ class TicketListView(generic.ListView):
 
     def get_queryset(self, tag_slug=None, *args, **kwargs):
         queryset = Ticket.published.all()
-        # tag = None
-        # if tag_slug:
-        #     tag = get_object_or_404(Tag, slug=tag_slug)
-        #     # tag = get_object_or_404(Tag, slug=tag_slug)
-        #     queryset = queryset.filter(tags__in=[tag])
         return queryset
 
-    def get_context_data(self, tag_slug=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['tag'] = Tag.objects.all()
-        return context
+    # def get_context_data(self, tag_slug=None, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     return context
 
 
 class TicketDetailView(generic.edit.FormMixin, generic.DetailView):
@@ -55,11 +47,3 @@ class TicketDetailView(generic.edit.FormMixin, generic.DetailView):
         new_comment.ticket = self.object
         new_comment.save()
         return super().form_valid(form)
-
-    # def post(self, request, *args, **kwargs):
-    #     form = CommentForm(request.POST)
-    #     new_comment = None
-    #     if form.is_valid():
-    #         new_comment = form.save(commit=False)
-    #         new_comment.ticket = self.ticket
-    #         new_comment.save()
