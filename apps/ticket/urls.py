@@ -7,6 +7,9 @@ app_name = 'ticket'
 urlpatterns = [
     # ticket views
     path('', views.TicketListView.as_view(), name='ticket-list'),
-    path('<int:pk>/<slug:slug>/',
-         views.TicketDetailView.as_view(), name='post_detail'),
+    path('open/tickets/', views.TicketOpenListView.as_view(), name='ticket-open'),
+    path('closed/tickets/', views.TicketClosedListView.as_view(), name='ticket-closed'),
+    path('<int:pk>/',
+         views.TicketDetailView.as_view(), name='ticket-detail'),
+    path('create/', views.TicketCreateView.as_view(), name='ticket-create')
 ]

@@ -130,3 +130,6 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = 'login/'

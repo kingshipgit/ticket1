@@ -1,39 +1,71 @@
 {% extends "ticket/base.html" %}
 {% load crispy_forms_tags %}
-{% block title %}{{ object.title }}{% endblock %}
+{% block title %}#{{ object.pk }} - {{ object.subject }}{% endblock %}
 {% block content %}
-<p class="small text-muted">
-    Published {{ object.publish }} by {{ object.author }}
-</p>
-<h1 class="small">{{ object.title }}</h1>
+<div class="container">
+    <div class="row">
+        <div class="col border-3 border rounded-3 p-4 m-1">
 
-{{ object.body|linebreaks }}
+            <div class="alert alert-secondary mt-3"
+                role="alert">
+                <div class="fw-bolder text-center">
+                    Ticket current status: <span
+                        class="text-info fw-bolder fs-5">
+                        {{ object.status|title }}</span>
+                </div>
+            </div>
+            <p class="small text-muted">
+                created by: {{ object.publish }} by {{ object.author }}
+            </p>
+            <p>{{ object.title }}</p>
+            {{ object.body|linebreaks }}
+            <div class="small container">
+                {% with comments.count as total_comments %}
+                <p>
+                    {{ total_comments }}
+                    comment{{ total_comments|pluralize }}
+                </p>
+                {% endwith %}
+                {% for comment in comments %}
+                <div class="border border-3 rounded-3 m-1 p-2">
+                    <p class="text-info">
+                        <span class="small text-muted">
+                            Comment {{ forloop.counter }} by {{ comment.name }}
+                            {{ comment.created }}
+                        </span>
+                    </p>
+                    {{ comment.comment|linebreaks }}
+                </div>
+                {% empty %}
+                <div class="container">
+                    <p>There are no comments yet.</p>
+                </div>
 
-{% with comments.count as total_comments %}
-<h2 class="small">
-    {{ total_comments }} comment{{ total_comments|pluralize }}
-</h2>
-{% endwith %}
-{% for comment in comments %}
-<div class="comment">
-    <p class="info">
-        Comment {{ forloop.counter }} by {{ comment.name }}
-        {{ comment.created }}
-    </p>
-    {{ comment.body|linebreaks }}
+                {% endfor %}
+                {% if new_comment %}
+                <h2>Your comment has been added.</h2>
+                {% else %}
+
+            </div>
+        </div>
+        <div
+            class="col-lg-4 col-md-4 col-sm-12 border-3 border rounded-3 p-4 m-1">
+            <div class="alert alert-secondary text-center"
+                role="alert">
+                <span class="text-dark fw-bolder fs-5">Add a new
+                    comment</span>
+            </div>
+            <form method="post">
+                {{ form|crispy }}
+                {% csrf_token %}
+                <div class="d-grid gap-2">
+                    <input type="submit"
+                        class="btn btn-sm btn-outline-primary my-4"
+                        value="Add comment">
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
-{% empty %}
-<p>There are no comments yet.</p>
-{% endfor %}
-{% if new_comment %}
-<h2>Your comment has been added.</h2>
-{% else %}
-<h2 class="small">Add a new comment</h2>
-<form method="post">
-    {{ form|crispy }}
-    {% csrf_token %}
-    <p><input type="submit" class="btn btn-sm btn-outline-primary my-4 "
-            value="Add comment"></p>
-</form>
 {% endif %}
 {% endblock %}

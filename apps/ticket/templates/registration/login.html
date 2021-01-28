@@ -1,0 +1,23 @@
+{% extends "ticket/base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Create Ticket{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-lg-4 col-sm-12 border border-3 rounded-3 p-3 m-1">
+            <form action=""
+                method="post">
+                {% csrf_token %}
+                {{ form|crispy }}
+                <div class="d-grid gap-2">
+                    <button class="btn btn-sm btn-primary my-3"
+                        type="submit">login</button>
+                </div>
+            </form>
+        </div>
+        <div class="col border border-3 rounded-3 p-3 m-1"></div>
+    </div>
+
+</div>
+
+{% endblock %}
