@@ -89,5 +89,3 @@ class TicketDetailView(LoginRequiredMixin, generic.edit.FormMixin, generic.Detai
             ['to@example.com'],
             fail_silently=False,
         )
-        
-        

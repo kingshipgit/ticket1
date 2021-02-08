@@ -1,5 +1,6 @@
 from django import forms
-from .models import Comment
+from django.db.models import fields
+from .models import Comment, Ticket
 
 
 class CommentForm(forms.ModelForm):

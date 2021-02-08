@@ -1,0 +1,29 @@
+{% if messages %}
+<div class="container col-lg-4">
+
+    <ul class="alert alert-warning alert-dismissible fade show"
+        role="alert">
+        <div class="container">
+            {% for message in messages %}
+
+            <li 
+            {% if message.tags %}
+                class="{{ message.tags }}"
+                {% endif %}><strong>
+                    {% if request.user.profile.get_full_name %}
+                    {{request.user.profile.get_full_name }},
+                    {% else %}
+                    {{ request.user.username }}
+                    {% endif %}
+                </strong> {{ message }}.</li>
+        {% endfor %}
+
+        </div>
+        <button type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"></button>
+    </ul>
+</div>
+
+{% endif %}

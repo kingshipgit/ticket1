@@ -33,6 +33,9 @@ class Ticket(models.Model):
     def get_absolute_url(self):
         return reverse('ticket:ticket-detail', args=[self.pk])
 
+    def closed_ticket(self):
+        return reverse('ticket:ticket-closed', args=[self.pk])
+
     def __str__(self):
         return self.subject
 
